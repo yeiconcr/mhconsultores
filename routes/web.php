@@ -60,3 +60,41 @@ Route::get('/setup-database', function () {
     
     return $output;
 });
+
+// RUTA DE EMERGENCIA: Crear usuario admin directamente
+Route::get('/create-admin-now', function () {
+    try {
+        $email = 'admin@mhconsultores.com';
+        
+        // Verificar si ya existe
+        $existing = \App\Models\User::where('email', $email)->first();
+        if ($existing) {
+            return '<h1>✅ Usuario ya existe</h1>
+                    <p>Email: ' . $email . '</p>
+                    <p>Puedes intentar acceder a <a href="/admin">/admin</a></p>
+                    <p>Si olvidaste la password, necesitarás resetearla.</p>';
+        }
+        
+        // Crear usuario nuevo
+        $user = \App\Models\User::create([
+            'name' => 'Administrador MH',
+            'email' => $email,
+            'password' => \Illuminate\Support\Facades\Hash::make('MHConsultores2026!'),
+        ]);
+        
+        return '<h1 style="color: green;">✅ USUARIO CREADO EXITOSAMENTE</h1>
+                <p><strong>Email:</strong> admin@mhconsultores.com</p>
+                <p><strong>Password:</strong> MHConsultores2026!</p>
+                <hr>
+                <a href="/admin" style="background: #0ea5e9; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-size: 18px;">
+                    🚀 Ir al Panel de Admin
+                </a>
+                <hr>
+                <p style="color: red;"><strong>IMPORTANTE:</strong> Elimina esta ruta después de usarla.</p>';
+                
+    } catch (\Exception $e) {
+        return '<h1 style="color: red;">❌ Error</h1>
+                <p>' . $e->getMessage() . '</p>
+                <pre>' . $e->getTraceAsString() . '</pre>';
+    }
+});

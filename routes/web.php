@@ -20,19 +20,43 @@ Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('ne
 
 // Ruta temporal para poblar la base de datos en producción
 Route::get('/setup-database', function () {
+    $output = '<h1>Resultado de la configuración</h1>';
+    
     try {
-        Artisan::call('db:seed', ['--class' => 'SiteSettingsSeeder', '--force' => true]);
-        Artisan::call('db:seed', ['--class' => 'AdminUserSeeder', '--force' => true]);
+        // Verificar que las tablas existan
+        $output .= '<p>✅ Conexión a la base de datos establecida</p>';
         
-        return '<h1>✅ Base de datos poblada correctamente!</h1>
+        // Ejecutar SiteSettingsSeeder
+        $output .= '<p>Ejecutando SiteSettingsSeeder...</p>';
+        Artisan::call('db:seed', [
+            '--class' => 'Database\\Seeders\\SiteSettingsSeeder',
+            '--force' => true
+        ]);
+        $output .= '<p>✅ SiteSettingsSeeder completado</p>';
+        
+        // Ejecutar AdminUserSeeder
+        $output .= '<p>Ejecutando AdminUserSeeder...</p>';
+        Artisan::call('db:seed', [
+            '--class' => 'Database\\Seeders\\AdminUserSeeder',
+            '--force' => true
+        ]);
+        $output .= '<p>✅ AdminUserSeeder completado</p>';
+        
+        $output .= '<hr><h2>✅ Base de datos poblada correctamente!</h2>
                 <p><strong>Usuario Admin creado:</strong></p>
                 <ul>
                     <li>Email: admin@mhconsultores.com</li>
                     <li>Password: MHConsultores2026!</li>
                 </ul>
-                <p><a href="/admin">Ir al Panel Admin</a></p>
-                <p style="color: red;"><strong>IMPORTANTE:</strong> Elimina esta ruta /setup-database del código después de usarla.</p>';
+                <p><a href="/admin" style="background: #0ea5e9; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Ir al Panel Admin</a></p>
+                <p style="color: red; margin-top: 20px;"><strong>IMPORTANTE:</strong> Elimina esta ruta /setup-database del código después de usarla por seguridad.</p>';
+                
     } catch (\Exception $e) {
-        return '<h1>❌ Error al poblar la base de datos</h1><p>' . $e->getMessage() . '</p>';
+        $output .= '<hr><h2 style="color: red;">❌ Error al poblar la base de datos</h2>';
+        $output .= '<p><strong>Mensaje:</strong> ' . $e->getMessage() . '</p>';
+        $output .= '<p><strong>Archivo:</strong> ' . $e->getFile() . ':' . $e->getLine() . '</p>';
+        $output .= '<pre>' . $e->getTraceAsString() . '</pre>';
     }
+    
+    return $output;
 });

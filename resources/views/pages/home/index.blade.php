@@ -12,7 +12,7 @@
 
     <div class="container mx-auto px-4 relative z-10">
         <div class="max-w-4xl mx-auto text-center text-white">
-            <h1 class="font-heading text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            <h1 class="font-heading text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
                 {{ site_setting('hero.title', 'Transformamos Procesos,') }}
                 <span class="text-accent-400">{{ site_setting('hero.subtitle', 'Garantizamos Calidad') }}</span>
             </h1>

@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
-use App\Models\Project;
-use App\Models\Testimonial;
-use App\Models\Post;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -18,23 +15,10 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
 
-        $featuredProjects = Project::featured()
-            ->with('service')
-            ->latest('completion_date')
-            ->limit(3)
-            ->get();
-
-        $testimonials = Testimonial::where('approved', true)
-            ->where('is_featured', true)
-            ->latest()
-            ->limit(3)
-            ->get();
-
-        $latestPosts = Post::published()
-            ->with(['category', 'author'])
-            ->latest('published_at')
-            ->limit(3)
-            ->get();
+        // Modelos eliminados temporalmente para simplificar
+        $featuredProjects = collect([]); 
+        $testimonials = collect([]);
+        $latestPosts = collect([]);
 
         return view('pages.home.index', compact(
             'featuredServices',

@@ -10,13 +10,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('appointments');
         Schema::dropIfExists('posts');
         Schema::dropIfExists('post_categories');
+        Schema::dropIfExists('testimonials'); // Dropping testimonials before projects might help too, but disabling FK is safer
         Schema::dropIfExists('projects');
-        Schema::dropIfExists('testimonials');
         Schema::dropIfExists('social_links');
         Schema::dropIfExists('newsletter_campaigns');
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

@@ -48,19 +48,19 @@
         <div class="max-w-5xl mx-auto">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div class="text-center">
-                    <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">10+</div>
+                    <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">{{ settings('stats.years', '10+') }}</div>
                     <div class="text-gray-600 font-medium">Años de Experiencia</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">50+</div>
+                    <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">{{ settings('stats.companies', '50+') }}</div>
                     <div class="text-gray-600 font-medium">Empresas Asesoradas</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">100+</div>
+                    <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">{{ settings('stats.projects', '100+') }}</div>
                     <div class="text-gray-600 font-medium">Proyectos Exitosos</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">95%</div>
+                    <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">{{ settings('stats.satisfaction', '95%') }}</div>
                     <div class="text-gray-600 font-medium">Satisfacción</div>
                 </div>
             </div>

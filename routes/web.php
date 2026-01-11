@@ -79,3 +79,58 @@ Route::get('/run-migrations', function () {
                 <pre style="background: #fee; padding: 20px; border-radius: 8px;">' . $e->getTraceAsString() . '</pre>';
     }
 });
+
+// 2. Debug - Ver qué hay en la tabla users
+Route::get('/debug-users', function () {
+    try {
+        $output = '<h1>🔍 Estado de la Base de Datos</h1>';
+        
+        // Info de conexión
+        $connection = config('database.default');
+        $host = config('database.connections.' . $connection . '.host');
+        $database = config('database.connections.' . $connection . '.database');
+        $output .= '<p><strong>Conexión:</strong> ' . $connection . '</p>';
+        $output .= '<p><strong>Host:</strong> ' . $host . '</p>';
+        $output .= '<p><strong>Database:</strong> ' . $database . '</p>';
+        
+        // Contar usuarios
+        $userCount = \App\Models\User::count();
+        $output .= '<h2>Tabla Users: ' . $userCount . ' registros</h2>';
+        
+        if ($userCount > 0) {
+            $users = \App\Models\User::all(['id', 'name', 'email', 'created_at']);
+            $output .= '<table border="1" cellpadding="10" style="border-collapse: collapse;">';
+            $output .= '<tr><th>ID</th><th>Nombre</th><th>Email</th><th>Creado</th></tr>';
+            foreach ($users as $user) {
+                $output .= '<tr><td>' . $user->id . '</td><td>' . $user->name . '</td><td>' . $user->email . '</td><td>' . $user->created_at . '</td></tr>';
+            }
+            $output .= '</table>';
+            $output .= '<p style="color: green; margin-top: 20px;">✅ El usuario existe. Puedes ir a <a href="/admin/login">/admin/login</a></p>';
+            $output .= '<p><strong>Password:</strong> Admin2026MH!</p>';
+        } else {
+            $output .= '<p style="color: red;">❌ No hay usuarios. Creando uno ahora...</p>';
+            
+            $user = \App\Models\User::create([
+                'name' => 'Administrador MH',
+                'email' => 'admin@mhconsultores.com',
+                'password' => \Illuminate\Support\Facades\Hash::make('Admin2026MH!'),
+            ]);
+            
+            $output .= '<p style="color: green;">✅ Usuario creado con ID: ' . $user->id . '</p>';
+            $output .= '<p><strong>Email:</strong> admin@mhconsultores.com</p>';
+            $output .= '<p><strong>Password:</strong> Admin2026MH!</p>';
+            $output .= '<a href="/admin/login" style="background: #0ea5e9; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 20px;">🚀 Ir al Login</a>';
+        }
+        
+        // Contar site_settings
+        $settingsCount = \App\Models\SiteSetting::count();
+        $output .= '<h2 style="margin-top: 30px;">Tabla SiteSettings: ' . $settingsCount . ' registros</h2>';
+        
+        return $output;
+        
+    } catch (\Exception $e) {
+        return '<h1 style="color: red;">❌ Error</h1>
+                <p>' . $e->getMessage() . '</p>
+                <pre>' . $e->getTraceAsString() . '</pre>';
+    }
+});

@@ -194,7 +194,7 @@
                 <a href="{{ route('contact') }}" class="btn bg-accent-600 hover:bg-accent-700 text-white text-lg px-8 py-4">
                     <i class="fas fa-envelope mr-2"></i>Contáctanos
                 </a>
-                <a href="https://wa.me/573001234567?text=Hola,%20me%20gustaría%20obtener%20más%20información" target="_blank" class="btn bg-white text-primary-600 hover:bg-gray-100 text-lg px-8 py-4">
+                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', site_setting('contact.whatsapp', '573001234567')) }}?text=Hola,%20me%20gustaría%20obtener%20más%20información" target="_blank" class="btn bg-white text-primary-600 hover:bg-gray-100 text-lg px-8 py-4">
                     <i class="fab fa-whatsapp mr-2"></i>Escríbenos por WhatsApp
                 </a>
             </div>

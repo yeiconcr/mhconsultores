@@ -174,7 +174,7 @@
                             </div>
                             <h4 class="font-semibold text-gray-900 mb-1 text-sm">WhatsApp</h4>
                             <p class="text-xs text-gray-500 mb-3">Respuesta inmediata</p>
-                            <a href="https://wa.me/{{ str_replace(['+', ' ', '-'], '', env('WHATSAPP_NUMBER', '573001234567')) }}?text=Hola, me gustaría recibir información sobre sus servicios"
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', site_setting('contact.whatsapp', '573001234567')) }}?text=Hola, me gustaría recibir información sobre sus servicios"
                                target="_blank"
                                class="inline-block bg-success-600 text-white font-medium text-sm px-4 py-2 rounded hover:bg-success-700 transition">
                                 <i class="fab fa-whatsapp mr-1"></i>
@@ -188,8 +188,8 @@
                                 <i class="fas fa-envelope text-primary-600 text-xl"></i>
                             </div>
                             <h4 class="font-semibold text-gray-900 mb-1 text-sm">Email</h4>
-                            <a href="mailto:contacto@mhconsultores.com" class="text-xs text-gray-600 hover:text-primary-600 block mb-1">
-                                contacto@mhconsultores.com
+                            <a href="mailto:{{ site_setting('contact.email', 'contacto@mhconsultores.com') }}" class="text-xs text-gray-600 hover:text-primary-600 block mb-1">
+                                {{ site_setting('contact.email', 'contacto@mhconsultores.com') }}
                             </a>
                             <p class="text-xs text-gray-400">Te respondemos en 24h</p>
                         </div>
@@ -200,7 +200,7 @@
                                 <i class="fas fa-map-marker-alt text-accent-600 text-xl"></i>
                             </div>
                             <h4 class="font-semibold text-gray-900 mb-1 text-sm">Ubicación</h4>
-                            <p class="text-xs text-gray-600 mb-1">Bogotá, Colombia</p>
+                            <p class="text-xs text-gray-600 mb-1">{{ site_setting('contact.address', 'Palmira, Valle del Cauca, Colombia') }}</p>
                             <p class="text-xs text-gray-400">Cobertura nacional</p>
                         </div>
                     </div>

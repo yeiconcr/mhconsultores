@@ -18,50 +18,64 @@ Route::get('/contacto', function () {
 Route::post('/contacto', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 
-// RUTA DE EMERGENCIA: Resetear password del admin
-Route::get('/reset-admin-password', function () {
+// ========================================
+// RUTAS DE SETUP PARA PRODUCCIÓN
+// ========================================
+
+// 1. Ejecutar migraciones
+Route::get('/run-migrations', function () {
     try {
+        $output = '<h1>🔧 Ejecutando Migraciones</h1>';
+        
+        // Verificar conexión a BD
+        $output .= '<h2>1. Verificando conexión...</h2>';
+        $connection = config('database.default');
+        $database = config('database.connections.' . $connection . '.database');
+        $host = config('database.connections.' . $connection . '.host');
+        $output .= '<p>Conexión: <strong>' . $connection . '</strong></p>';
+        $output .= '<p>Host: <strong>' . $host . '</strong></p>';
+        $output .= '<p>Base de datos: <strong>' . $database . '</strong></p>';
+        
+        // Ejecutar migraciones
+        $output .= '<h2>2. Ejecutando migrate...</h2>';
+        Artisan::call('migrate', ['--force' => true]);
+        $migrateOutput = Artisan::output();
+        $output .= '<pre style="background: #1e1e1e; color: #4ade80; padding: 20px; border-radius: 8px; overflow-x: auto;">' . $migrateOutput . '</pre>';
+        
+        // Ejecutar seeders
+        $output .= '<h2>3. Ejecutando seeders...</h2>';
+        
+        Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\SiteSettingsSeeder', '--force' => true]);
+        $output .= '<p>✅ SiteSettingsSeeder completado</p>';
+        
+        // Crear usuario admin
         $email = 'admin@mhconsultores.com';
-        $newPassword = 'Admin2026MH!';
-        
-        // Buscar el usuario
-        $user = \App\Models\User::where('email', $email)->first();
-        
-        if (!$user) {
-            // Si no existe, crearlo
-            $user = \App\Models\User::create([
+        $existing = \App\Models\User::where('email', $email)->first();
+        if (!$existing) {
+            \App\Models\User::create([
                 'name' => 'Administrador MH',
                 'email' => $email,
-                'password' => \Illuminate\Support\Facades\Hash::make($newPassword),
+                'password' => \Illuminate\Support\Facades\Hash::make('Admin2026MH!'),
             ]);
-            
-            return '<h1 style="color: green;">✅ USUARIO CREADO</h1>
-                    <p><strong>Email:</strong> ' . $email . '</p>
-                    <p><strong>Nueva Password:</strong> ' . $newPassword . '</p>
-                    <hr>
-                    <a href="/admin" style="background: #0ea5e9; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-size: 18px;">
-                        🚀 Ir al Panel de Admin
-                    </a>';
+            $output .= '<p>✅ Usuario admin creado</p>';
+        } else {
+            // Resetear password
+            $existing->password = \Illuminate\Support\Facades\Hash::make('Admin2026MH!');
+            $existing->save();
+            $output .= '<p>✅ Password de admin reseteada</p>';
         }
         
-        // Si existe, resetear password
-        $user->password = \Illuminate\Support\Facades\Hash::make($newPassword);
-        $user->save();
+        $output .= '<hr><h2 style="color: green;">🎉 ¡TODO LISTO!</h2>';
+        $output .= '<p><strong>Email:</strong> admin@mhconsultores.com</p>';
+        $output .= '<p><strong>Password:</strong> Admin2026MH!</p>';
+        $output .= '<a href="/admin" style="background: #0ea5e9; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 20px;">🚀 Ir al Panel Admin</a>';
         
-        return '<h1 style="color: green;">✅ PASSWORD RESETEADA EXITOSAMENTE</h1>
-                <p><strong>Email:</strong> ' . $email . '</p>
-                <p><strong>Nueva Password:</strong> <code style="background: #eee; padding: 5px 10px; font-size: 18px;">' . $newPassword . '</code></p>
-                <p style="color: orange; margin-top: 20px;">⚠️ COPIA ESTA PASSWORD EXACTAMENTE COMO APARECE ARRIBA (respetando mayúsculas y símbolos)</p>
-                <hr>
-                <a href="/admin" style="background: #0ea5e9; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-size: 18px;">
-                    🚀 Ir al Panel de Admin
-                </a>
-                <hr>
-                <p style="color: red; margin-top: 20px;"><strong>IMPORTANTE:</strong> Una vez dentro, cambia la password desde el panel de admin y luego elimina esta ruta del código por seguridad.</p>';
-                
+        return $output;
+        
     } catch (\Exception $e) {
         return '<h1 style="color: red;">❌ Error</h1>
                 <p><strong>Mensaje:</strong> ' . $e->getMessage() . '</p>
-                <pre>' . $e->getTraceAsString() . '</pre>';
+                <p><strong>Archivo:</strong> ' . $e->getFile() . ':' . $e->getLine() . '</p>
+                <pre style="background: #fee; padding: 20px; border-radius: 8px;">' . $e->getTraceAsString() . '</pre>';
     }
 });

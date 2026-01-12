@@ -137,6 +137,42 @@ class SiteSettingsSeeder extends Seeder
                 'label' => 'Imagen del Equipo',
                 'description' => 'Imagen que aparece en la sección "Quiénes Somos"',
             ],
+
+            // Sección Servicios
+            [
+                'key' => 'services.title',
+                'value' => 'Servicios Principales',
+                'type' => 'text',
+                'group' => 'services',
+                'label' => 'Título de Servicios',
+                'description' => 'Título de la sección de servicios en homepage',
+            ],
+            [
+                'key' => 'services.subtitle',
+                'value' => 'Soluciones integrales para mejorar la calidad y eficiencia de tu empresa',
+                'type' => 'textarea',
+                'group' => 'services',
+                'label' => 'Subtítulo de Servicios',
+                'description' => 'Descripción corta debajo del título de servicios',
+            ],
+
+            // Call to Action
+            [
+                'key' => 'cta.title',
+                'value' => '¿Listo para Transformar tu Empresa?',
+                'type' => 'text',
+                'group' => 'cta',
+                'label' => 'Título CTA',
+                'description' => 'Título del llamado a la acción final',
+            ],
+            [
+                'key' => 'cta.description',
+                'value' => 'Contáctanos y descubre cómo podemos ayudarte a alcanzar la excelencia operacional.',
+                'type' => 'textarea',
+                'group' => 'cta',
+                'label' => 'Descripción CTA',
+                'description' => 'Descripción del llamado a la acción',
+            ],
         ];
 
         foreach ($settings as $setting) {

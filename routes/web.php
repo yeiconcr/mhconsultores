@@ -16,3 +16,4 @@ Route::get('/contacto', function () {
 })->name('contact');
 Route::post('/contacto', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');

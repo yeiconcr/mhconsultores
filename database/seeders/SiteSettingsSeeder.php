@@ -173,6 +173,32 @@ class SiteSettingsSeeder extends Seeder
                 'label' => 'Descripción CTA',
                 'description' => 'Descripción del llamado a la acción',
             ],
+
+            // SEO Básico
+            [
+                'key' => 'seo.default_title',
+                'value' => 'MH Consultores - Consultoría Profesional en Calidad',
+                'type' => 'text',
+                'group' => 'seo',
+                'label' => 'Título por Defecto',
+                'description' => 'Título del sitio cuando no se especifica uno',
+            ],
+            [
+                'key' => 'seo.default_description',
+                'value' => 'MH Consultores ofrece consultoría profesional en sistemas de gestión de calidad, mejora continua y optimización de procesos industriales en Colombia.',
+                'type' => 'textarea',
+                'group' => 'seo',
+                'label' => 'Descripción por Defecto',
+                'description' => 'Meta descripción del sitio cuando no se especifica una',
+            ],
+            [
+                'key' => 'seo.og_image',
+                'value' => 'images/consulting-team.png',
+                'type' => 'image',
+                'group' => 'seo',
+                'label' => 'Imagen Social Default',
+                'description' => 'Imagen que se muestra al compartir en redes sociales',
+            ],
         ];
 
         foreach ($settings as $setting) {

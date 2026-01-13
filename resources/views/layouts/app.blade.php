@@ -1,30 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
-    <title>@yield('title', 'MH Consultores - Consultoría Profesional en Calidad')</title>
-    <meta name="description" content="@yield('meta_description', 'MH Consultores ofrece consultoría profesional en sistemas de gestión de calidad, mejora continua y optimización de procesos industriales en Colombia.')">
-    
+
+    <title>@yield('title', site_setting('seo.default_title', 'MH Consultores - Consultoría Profesional en Calidad'))
+    </title>
+    <meta name="description"
+        content="@yield('meta_description', site_setting('seo.default_description', 'MH Consultores ofrece consultoría profesional en sistemas de gestión de calidad, mejora continua y optimización de procesos industriales en Colombia.'))">
+    <link rel="canonical" href="{{ url()->current() }}" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('title', site_setting('seo.default_title', 'MH Consultores'))">
+    <meta property="og:description"
+        content="@yield('meta_description', site_setting('seo.default_description', 'Consultoría en Calidad y Mejora Continua'))">
+    <meta property="og:image" content="{{ asset(site_setting('seo.og_image', 'images/og-default.jpg')) }}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url()->current() }}">
+    <meta property="twitter:title" content="@yield('title', site_setting('seo.default_title', 'MH Consultores'))">
+    <meta property="twitter:description"
+        content="@yield('meta_description', site_setting('seo.default_description', 'Consultoría en Calidad y Mejora Continua'))">
+    <meta property="twitter:image" content="{{ asset(site_setting('seo.og_image', 'images/og-default.jpg')) }}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
+
     @stack('styles')
 </head>
+
 <body class="font-sans antialiased bg-gray-50">
-    
+
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <nav class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <a href="{{ route('home') }}" class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-800 rounded-lg flex items-center justify-center">
+                    <div
+                        class="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-800 rounded-lg flex items-center justify-center">
                         <span class="text-white text-xl font-bold">MH</span>
                     </div>
                     <div>
@@ -40,10 +64,12 @@
                     <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}">
                         Nosotros
                     </a>
-                    <a href="{{ route('services.index') }}" class="nav-link {{ request()->routeIs('services.*') ? 'active' : '' }}">
+                    <a href="{{ route('services.index') }}"
+                        class="nav-link {{ request()->routeIs('services.*') ? 'active' : '' }}">
                         Servicios
                     </a>
-                    <a href="{{ route('contact') }}" class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">
+                    <a href="{{ route('contact') }}"
+                        class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">
                         Contacto
                     </a>
                 </div>
@@ -64,9 +90,9 @@
         </nav>
     </header>
 
-    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', site_setting('contact.whatsapp', '573001234567')) }}?text=Hola,%20me%20gustaría%20obtener%20más%20información" 
-       target="_blank"
-       class="fixed bottom-6 right-6 bg-green-500 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition-all hover:scale-110 z-40">
+    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', site_setting('contact.whatsapp', '573001234567')) }}?text=Hola,%20me%20gustaría%20obtener%20más%20información"
+        target="_blank"
+        class="fixed bottom-6 right-6 bg-green-500 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition-all hover:scale-110 z-40">
         <i class="fab fa-whatsapp text-3xl"></i>
     </a>
 
@@ -83,14 +109,13 @@
                 <p class="text-primary-100 mb-8">
                     Recibe artículos, tips y novedades sobre calidad y mejora continua directamente en tu email.
                 </p>
-                <form action="{{ route('newsletter.subscribe') }}" method="POST" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                <form action="{{ route('newsletter.subscribe') }}" method="POST"
+                    class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
                     @csrf
-                    <input type="email" 
-                           name="email" 
-                           placeholder="Tu correo electrónico" 
-                           required
-                           class="flex-1 px-5 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white">
-                    <button type="submit" class="bg-accent-600 hover:bg-accent-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                    <input type="email" name="email" placeholder="Tu correo electrónico" required
+                        class="flex-1 px-5 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white">
+                    <button type="submit"
+                        class="bg-accent-600 hover:bg-accent-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
                         Suscribirme
                     </button>
                 </form>
@@ -104,7 +129,8 @@
                 <div>
                     <h4 class="font-heading font-bold text-white text-lg mb-4">MH Consultores</h4>
                     <p class="text-sm mb-4">
-                        Consultoría profesional en sistemas de gestión de calidad, mejora continua y optimización de procesos industriales en Colombia.
+                        Consultoría profesional en sistemas de gestión de calidad, mejora continua y optimización de
+                        procesos industriales en Colombia.
                     </p>
                 </div>
 
@@ -155,7 +181,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+        document.getElementById('mobile-menu-btn').addEventListener('click', function () {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
@@ -176,17 +202,18 @@
                 icon: 'error',
                 title: 'Atención',
                 html: `
-                    <ul class="text-left text-sm">
-                        @foreach($errors->all() as $error)
-                            <li>• {{ $error }}</li>
-                        @endforeach
-                    </ul>
-                `,
+                        <ul class="text-left text-sm">
+                            @foreach($errors->all() as $error)
+                                <li>• {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    `,
                 confirmButtonColor: '#ef4444'
             });
         @endif
     </script>
-    
+
     @stack('scripts')
 </body>
+
 </html>

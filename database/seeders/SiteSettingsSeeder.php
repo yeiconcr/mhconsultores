@@ -202,10 +202,21 @@ class SiteSettingsSeeder extends Seeder
         ];
 
         foreach ($settings as $setting) {
-            SiteSetting::updateOrCreate(
-                ['key' => $setting['key']],
-                $setting
-            );
+            $existing = SiteSetting::where('key', $setting['key'])->first();
+
+            if ($existing) {
+                // Si ya existe, actualizamos solo la metadata (etiqueta, descripción, tipo)
+                // PERO respetamos el 'value' que el usuario haya editado en producción.
+                $existing->update([
+                    'type' => $setting['type'],
+                    'group' => $setting['group'],
+                    'label' => $setting['label'],
+                    'description' => $setting['description'],
+                ]);
+            } else {
+                // Si no existe, lo creamos con el valor por defecto
+                SiteSetting::create($setting);
+            }
         }
     }
 }

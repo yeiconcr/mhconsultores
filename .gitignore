@@ -23,4 +23,15 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 
+# AI Tools Configuration
+.ai/
+.cursor/
+.gemini/
+.claude/mcp.json
+.mcp.json
+boost.json
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+
 nul

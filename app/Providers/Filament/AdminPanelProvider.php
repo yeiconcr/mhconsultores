@@ -27,9 +27,13 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset() // Habilitar recuperación de contraseña
+            ->profile() // Permitir a los usuarios editar su perfil y cambiar contraseña
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->brandName('MH Consultores')
+            ->favicon(asset('favicon.ico'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

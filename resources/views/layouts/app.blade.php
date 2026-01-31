@@ -47,14 +47,26 @@
         <nav class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <a href="{{ route('home') }}" class="flex items-center space-x-3">
-                    <div
-                        class="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-800 rounded-lg flex items-center justify-center">
-                        <span class="text-white text-xl font-bold">MH</span>
-                    </div>
-                    <div>
-                        <h1 class="font-heading font-bold text-xl text-gray-900">MH Consultores</h1>
-                        <p class="text-xs text-gray-600">Calidad & Mejora Continua</p>
-                    </div>
+                    @php
+                        $logoPath = site_setting('branding.logo');
+                    @endphp
+                    
+                    @if ($logoPath)
+                        {{-- Logo subido desde el admin --}}
+                        <img src="{{ asset('storage/' . $logoPath) }}" 
+                             alt="MH Consultores" 
+                             class="h-12 w-auto object-contain">
+                    @else
+                        {{-- Logo por defecto si no hay logo subido --}}
+                        <div
+                            class="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-800 rounded-lg flex items-center justify-center">
+                            <span class="text-white text-xl font-bold">MH</span>
+                        </div>
+                        <div>
+                            <h1 class="font-heading font-bold text-xl text-gray-900">MH Consultores</h1>
+                            <p class="text-xs text-gray-600">Calidad & Mejora Continua</p>
+                        </div>
+                    @endif
                 </a>
 
                 <div class="hidden lg:flex items-center space-x-8">

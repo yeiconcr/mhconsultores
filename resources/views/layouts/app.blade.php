@@ -55,7 +55,7 @@
                         {{-- Logo subido desde el admin --}}
                         <img src="{{ asset('storage/' . $logoPath) }}" 
                              alt="MH Consultores" 
-                             class="h-12 w-auto object-contain">
+                             class="h-16 md:h-20 w-auto max-w-[200px] object-contain">
                     @else
                         {{-- Logo por defecto si no hay logo subido --}}
                         <div

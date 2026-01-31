@@ -33,12 +33,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->brandName('MH Consultores')
             ->favicon(asset('favicon.ico'))
-            ->brandLogo(fn () => \App\Models\SiteSetting::get('branding.logo') 
-                ? asset('storage/' . \App\Models\SiteSetting::get('branding.logo')) 
-                : null)
-            ->darkModeBrandLogo(fn () => \App\Models\SiteSetting::get('branding.logo_dark') 
-                ? asset('storage/' . \App\Models\SiteSetting::get('branding.logo_dark')) 
-                : null)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

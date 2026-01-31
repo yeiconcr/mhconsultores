@@ -34,8 +34,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->brandName('MH Consultores')
             ->favicon(asset('favicon.ico'))
-            ->locale('es')  // Configurar panel en español
-            ->defaultLocale('es')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

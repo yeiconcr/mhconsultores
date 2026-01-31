@@ -112,6 +112,24 @@ class SiteSettingsSeeder extends Seeder
                 'description' => 'Dirección física de la empresa',
             ],
 
+            // Branding / Logo
+            [
+                'key' => 'branding.logo',
+                'value' => null,
+                'type' => 'image',
+                'group' => 'branding',
+                'label' => 'Logo Principal',
+                'description' => 'Logo que aparece en el panel de administración y el sitio web (modo claro)',
+            ],
+            [
+                'key' => 'branding.logo_dark',
+                'value' => null,
+                'type' => 'image',
+                'group' => 'branding',
+                'label' => 'Logo Modo Oscuro',
+                'description' => 'Logo para el modo oscuro del panel de administración (opcional)',
+            ],
+
             // Sobre Nosotros
             [
                 'key' => 'about.title',

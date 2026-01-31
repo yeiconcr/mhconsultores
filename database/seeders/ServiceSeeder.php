@@ -31,7 +31,7 @@ class ServiceSeeder extends Seeder
             ]
         );
 
-        Service::updateOrCreate(
+        Service::firstOrCreate(
             ['slug' => 'implementacion-iso-9001'],
             [
                 'category_id' => $consultoria->id,
@@ -56,7 +56,7 @@ class ServiceSeeder extends Seeder
             ]
         );
 
-        Service::updateOrCreate(
+        Service::firstOrCreate(
             ['slug' => 'lean-manufacturing'],
             [
                 'category_id' => $consultoria->id,
@@ -81,7 +81,7 @@ class ServiceSeeder extends Seeder
             ]
         );
 
-        Service::updateOrCreate(
+        Service::firstOrCreate(
             ['slug' => 'six-sigma-dmaic'],
             [
                 'category_id' => $consultoria->id,
@@ -106,7 +106,7 @@ class ServiceSeeder extends Seeder
             ]
         );
 
-        Service::updateOrCreate(
+        Service::firstOrCreate(
             ['slug' => 'auditorias-de-calidad'],
             [
                 'category_id' => $consultoria->id,
@@ -121,7 +121,7 @@ class ServiceSeeder extends Seeder
             ]
         );
 
-        Service::updateOrCreate(
+        Service::firstOrCreate(
             ['slug' => 'capacitacion-herramientas-calidad'],
             [
                 'category_id' => $capacitacion->id,
@@ -136,7 +136,7 @@ class ServiceSeeder extends Seeder
             ]
         );
 
-        Service::updateOrCreate(
+        Service::firstOrCreate(
             ['slug' => 'gestion-proyectos-mejora'],
             [
                 'category_id' => $consultoria->id,

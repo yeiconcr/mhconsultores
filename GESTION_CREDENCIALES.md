@@ -13,28 +13,6 @@
 
 ---
 
-## 🔧 Cómo Resetear la Contraseña
-
-### Método 1: Desde la Interfaz Web (Recomendado)
-
-1. Ve a: https://mhconsultores-main-ipslny.laravel.cloud/admin/login
-2. Haz clic en **"¿Olvidaste tu contraseña?"**
-3. Ingresa tu email: `admin@mhconsultores.com`
-4. Revisa tu correo electrónico
-5. Sigue el enlace para restablecer la contraseña
-
-> [!NOTE]
-> Este método requiere que el servicio de email esté configurado en producción.
-
-### Método 2: Usando Comando Artisan (Para Emergencias)
-
-Si no tienes acceso al email o necesitas resetear urgentemente:
-
-```bash
-# Conectarse al servidor Laravel Cloud via SSH
-# Luego ejecutar:
-
-php artisan admin:reset-password
 ```
 
 El comando te pedirá la nueva contraseña de forma interactiva.

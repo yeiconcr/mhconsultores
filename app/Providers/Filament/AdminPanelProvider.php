@@ -27,7 +27,6 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->passwordReset() // Habilitar recuperación de contraseña
             ->profile() // Permitir a los usuarios editar su perfil y cambiar contraseña
             ->colors([
                 'primary' => Color::Amber,
